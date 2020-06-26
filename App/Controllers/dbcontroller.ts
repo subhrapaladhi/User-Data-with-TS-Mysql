@@ -1,7 +1,51 @@
-import { create, getUserId, getUsers, updateUser, deleteUser } from "../Services/services.js";
-import { genSaltSync, hashSync } from "bcrypt"
+import {    create, 
+            getUserId, 
+            getUsers, 
+            updateUser, 
+            deleteUser,
+            getUserbyEmail } from "../Services/services.js";
+
+import {    genSaltSync, 
+            hashSync,
+            compareSync } from "bcrypt";
+
+import { sign } from "jsonwebtoken"; 
 
 export = {
+    login: (req, res) => {
+        const body = req.body;
+        getUserbyEmail(body.email, (err, results) => {
+            if(err){
+                return res({
+                    success: 0,
+                    data: "invalid email or password"
+                });
+            }
+            if(!results){
+                return res.json({
+                    success: 0,
+                    data: "invalid email or password"
+                });
+            }
+            const result = compareSync(body.password, results.password);
+            if(result){
+                results.password = undefined;
+                const jsontoken = sign({result: results}, process.env.jwtkey, {
+                    expiresIn: "1h"
+                })
+                return res.json({
+                    success: 1,
+                    message: "login successful",
+                    token: jsontoken
+                });
+            } else {
+                return res.json({
+                    success: 0,
+                    data: "invalid email or password"
+                });
+            }
+        })
+    },
     createUser: (req: object|any, res: object|any) => {
         const body: object = req.body;
         const salt = genSaltSync(10);
@@ -62,7 +106,7 @@ export = {
         const body: object = req.body;
         const salt = genSaltSync(10);
         body.password = hashSync(body.password, salt);
-        updateUser(body, (error, resutls) => {
+        updateUser(body, (error, results) => {
             if(error){
                 console.log(error);
                 return res.status(500).json({

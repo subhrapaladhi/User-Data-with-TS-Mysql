@@ -1,7 +1,43 @@
 "use strict";
 const services_js_1 = require("../Services/services.js");
 const bcrypt_1 = require("bcrypt");
+const jsonwebtoken_1 = require("jsonwebtoken");
 module.exports = {
+    login: (req, res) => {
+        const body = req.body;
+        services_js_1.getUserbyEmail(body.email, (err, results) => {
+            if (err) {
+                return res({
+                    success: 0,
+                    data: "invalid email or password"
+                });
+            }
+            if (!results) {
+                return res.json({
+                    success: 0,
+                    data: "invalid email or password"
+                });
+            }
+            const result = bcrypt_1.compareSync(body.password, results.password);
+            if (result) {
+                results.password = undefined;
+                const jsontoken = jsonwebtoken_1.sign({ result: results }, process.env.jwtkey, {
+                    expiresIn: "1h"
+                });
+                return res.json({
+                    success: 1,
+                    message: "login successful",
+                    token: jsontoken
+                });
+            }
+            else {
+                return res.json({
+                    success: 0,
+                    data: "invalid email or password"
+                });
+            }
+        });
+    },
     createUser: (req, res) => {
         const body = req.body;
         const salt = bcrypt_1.genSaltSync(10);
@@ -61,7 +97,7 @@ module.exports = {
         const body = req.body;
         const salt = bcrypt_1.genSaltSync(10);
         body.password = bcrypt_1.hashSync(body.password, salt);
-        services_js_1.updateUser(body, (error, resutls) => {
+        services_js_1.updateUser(body, (error, results) => {
             if (error) {
                 console.log(error);
                 return res.status(500).json({

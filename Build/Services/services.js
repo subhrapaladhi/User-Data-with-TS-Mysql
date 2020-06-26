@@ -16,6 +16,14 @@ module.exports = {
             return callback(null, results);
         });
     },
+    getUserbyEmail: (email, callback) => {
+        database_js_1.pool.query(`select * from registration where email = ?`, [email], (error, results, fields) => {
+            if (error) {
+                callback(error);
+            }
+            return callback(null, results[0]);
+        });
+    },
     getUsers: callback => {
         database_js_1.pool.query(`select id, firstname, lastname, email, number from registration`, [], (error, results, fields) => {
             if (error) {

@@ -11,7 +11,8 @@ const express_1 = __importDefault(require("express"));
 const app = express_1.default();
 app.use(express_1.default.json());
 // IMPORT ROUTER
-const router_js_1 = __importDefault(require("./router.js"));
+const router_js_1 = __importDefault(require("./Routes/router.js"));
+// CALLING ROUTER
 app.use("/api/users", router_js_1.default);
 // SERVER HOSTING SECTION
 const PORT = process.env.PORT || 3000;

@@ -9,7 +9,9 @@ const app: express.Application = express();
 app.use(express.json())
 
 // IMPORT ROUTER
-import createrouter from "./router.js";
+import createrouter from "./Routes/router.js";
+
+// CALLING ROUTER
 app.use("/api/users", createrouter);
 
 // SERVER HOSTING SECTION

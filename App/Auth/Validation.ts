@@ -1,8 +1,7 @@
 import { verify } from "jsonwebtoken";
-import { delete } from "router";
 
 export = {
-    // CHECK IF JWT TOKEN IS VALID
+    // Authentication: CHECK IF JWT TOKEN IS VALID
     checkToken: (req, res, next) => {
         let token = req.get("authorization");
         if(token){
@@ -14,7 +13,6 @@ export = {
                         message: "invalid token"
                     })        
                 } else {
-                    delete req.userid; 
                     req.userid = decoded.result.id;
                     next();
                 }
@@ -26,7 +24,8 @@ export = {
             })
         }
     },
-    // VERIFY IF UPDATE/DELETE REQUEST IS FOR THE USER'S OWN ACCOUNT
+
+    // AUTHORIZATION: verify if update/delete request if for the user's own account
     checkAccount: (req, res, next) => {
         let id = req.params.id||req.body.id;
         console.log(`${req.userid} == ${id}`);

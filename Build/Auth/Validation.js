@@ -1,7 +1,7 @@
 "use strict";
 const jsonwebtoken_1 = require("jsonwebtoken");
 module.exports = {
-    // CHECK IF JWT TOKEN IS VALID
+    // Authentication: CHECK IF JWT TOKEN IS VALID
     checkToken: (req, res, next) => {
         let token = req.get("authorization");
         if (token) {
@@ -14,7 +14,6 @@ module.exports = {
                     });
                 }
                 else {
-                    delete req.userid;
                     req.userid = decoded.result.id;
                     next();
                 }
@@ -27,7 +26,7 @@ module.exports = {
             });
         }
     },
-    // VERIFY IF UPDATE/DELETE REQUEST IS FOR THE USER'S OWN ACCOUNT
+    // AUTHORIZATION: verify if update/delete request if for the user's own account
     checkAccount: (req, res, next) => {
         let id = req.params.id || req.body.id;
         console.log(`${req.userid} == ${id}`);

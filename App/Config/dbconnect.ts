@@ -4,6 +4,7 @@ dotenv.config();
 
 import {createPool} from "mysql";
 
+// ESTABLISH A CONNECTION WITH DATABASE WHICH CAN BE USED FOR EXECUTING QUERIES.
 const pool = createPool({
     port : process.env.DB_PORT,
     host: process.env.DB_HOST,

@@ -13,17 +13,17 @@ const getUserbyUserId_js_1 = require("../Controllers/getUserbyUserId.js");
 const updateUsers_js_1 = require("../Controllers/updateUsers.js");
 const deleteUser_js_1 = require("../Controllers/deleteUser.js");
 // AUTHENTICATION AND AUTHORIZATION
-const Validation_js_1 = require("../Auth/Validation.js");
+const { checkToken, checkAccount } = require("../Auth/Validation.js");
 // LOGIN
 router.post("/login", login_js_1.login);
 // CREATE NEW USER
 router.post("/", createUser_js_1.createUser);
 // GET USER BY ID
-router.get("/:id", Validation_js_1.checkToken, getUserbyUserId_js_1.getUserbyUserId);
+router.get("/:id", checkToken, getUserbyUserId_js_1.getUserbyUserId);
 // GET ALL USERS DATA
-router.get("/", Validation_js_1.checkToken, getUsers_js_1.getUsers);
+router.get("/", checkToken, getUsers_js_1.getallUsers);
 // UPDATE USER DATA
-router.put("/", Validation_js_1.checkToken, Validation_js_1.checkAccount, updateUsers_js_1.updateUsers);
+router.put("/", checkToken, checkAccount, updateUsers_js_1.updateUsers);
 // DELETE USER
-router.delete("/:id", Validation_js_1.checkToken, Validation_js_1.checkAccount, deleteUser_js_1.deleteUser);
+router.delete("/:id", checkToken, checkAccount, deleteUser_js_1.deleteuser);
 module.exports = router;

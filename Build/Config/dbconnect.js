@@ -8,7 +8,7 @@ dotenv_1.default.config();
 const mysql_1 = require("mysql");
 // ESTABLISH A CONNECTION WITH DATABASE WHICH CAN BE USED FOR EXECUTING QUERIES.
 const pool = mysql_1.createPool({
-    port: process.env.DB_PORT,
+    port: Number(process.env.DB_PORT),
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,

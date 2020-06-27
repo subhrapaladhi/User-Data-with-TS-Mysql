@@ -1,13 +1,14 @@
 "use strict";
-const jsonwebtoken_1 = require("jsonwebtoken");
+const { verify } = require("jsonwebtoken");
 module.exports = {
     // Authentication: CHECK IF JWT TOKEN IS VALID
     checkToken: (req, res, next) => {
         let token = req.get("authorization");
         if (token) {
             token = token.slice(7);
-            jsonwebtoken_1.verify(token, process.env.jwtkey, (err, decoded) => {
+            verify(token, process.env.jwtkey, (err, decoded) => {
                 if (err) {
+                    console.log("error = ", typeof (err), " \ndecoded = ", decoded);
                     res.json({
                         success: 0,
                         message: "invalid token"

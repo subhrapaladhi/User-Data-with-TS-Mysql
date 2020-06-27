@@ -1,13 +1,15 @@
-import { verify } from "jsonwebtoken";
+const { verify } = require("jsonwebtoken");
+import {Request, Response, NextFunction} from "express";
 
 export = {
     // Authentication: CHECK IF JWT TOKEN IS VALID
-    checkToken: (req, res, next) => {
+    checkToken: (req: Request, res: Response, next: NextFunction) => {
         let token = req.get("authorization");
         if(token){
             token = token.slice(7);
-            verify(token, process.env.jwtkey, (err, decoded) => {
+            verify(token, process.env.jwtkey, (err:object, decoded) => {
                 if(err){
+                    console.log("error = ", typeof(err), " \ndecoded = ",decoded);
                     res.json({
                         success: 0,
                         message: "invalid token"
@@ -26,7 +28,7 @@ export = {
     },
 
     // AUTHORIZATION: verify if update/delete request if for the user's own account
-    checkAccount: (req, res, next) => {
+    checkAccount: (req: Request, res: Response, next: NextFunction) => {
         let id = req.params.id||req.body.id;
         console.log(`${req.userid} == ${id}`);
         if(req.userid != id){

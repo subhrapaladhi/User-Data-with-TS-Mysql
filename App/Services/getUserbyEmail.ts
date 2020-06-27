@@ -1,18 +1,16 @@
 // GET USER BY EMAIL
 
-import {pool} from '../Config/dbconnect.js';
+const {pool} = require('../Config/dbconnect.js');
 
-export = {
-    getUserbyEmail: (email, callback) => {
-        pool.query(
-            `select * from registration where email = ?`,
-            [email],
-            (error, results, fields) => {
-                if(error){
-                    callback(error);
-                }
-                return callback(null, results[0]);
+export const getUserbyEmail = (email:string, callback:Function) => {
+    pool.query(
+        `select * from registration where email = ?`,
+        [email],
+        (error: any, results: object[], fields: any) => {
+            if(error){
+                return callback(error);
             }
-        )
-    }
-}
+            return callback(null, results[0]);
+        }
+    )
+}   

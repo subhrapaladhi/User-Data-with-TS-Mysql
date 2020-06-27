@@ -1,18 +1,16 @@
 // GET ALL USERS DATA
 
-import {pool} from '../Config/dbconnect.js';
+const {pool} = require('../Config/dbconnect.js');
 
-export = {
-    getUsers: callback => {
-        pool.query(
-            `select id, firstname, lastname, email, number from registration`,
-            [],
-            (error, results, fields) => {
-                if(error){
-                    return callback(error);
-                }
-                return callback(null, results);
+export const getUsers = (callback: Function ) => {
+    pool.query(
+        `select id, firstname, lastname, email, number from registration`,
+        [],
+        (error: any, results: object[], fields:any) => {
+            if(error){
+                return callback(error);
             }
-        )
-    }
+            return callback(null, results);
+        }
+    )
 }

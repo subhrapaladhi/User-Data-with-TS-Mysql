@@ -6,6 +6,10 @@ dotenv.config();
 import express from "express";
 const app: express.Application = express();
 
+// HELMET
+import helmet from "helmet";
+app.use(helmet());
+
 // LOGGER
 import morgan from "morgan";
 app.use(morgan(<string>process.env.LOGGING_FMT))

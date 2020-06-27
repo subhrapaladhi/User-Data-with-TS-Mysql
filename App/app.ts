@@ -6,6 +6,10 @@ dotenv.config();
 import express from "express";
 const app: express.Application = express();
 
+// LOGGER
+import morgan from "morgan";
+app.use(morgan(<string>process.env.LOGGING_FMT))
+
 app.use(express.json())
 
 // IMPORT ROUTER

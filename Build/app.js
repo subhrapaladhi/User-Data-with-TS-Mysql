@@ -9,6 +9,9 @@ dotenv_1.default.config();
 // IMPORT EXPRESS
 const express_1 = __importDefault(require("express"));
 const app = express_1.default();
+// LOGGER
+const morgan_1 = __importDefault(require("morgan"));
+app.use(morgan_1.default(process.env.LOGGING_FMT));
 app.use(express_1.default.json());
 // IMPORT ROUTER
 const router_js_1 = __importDefault(require("./Routes/router.js"));

@@ -3,7 +3,7 @@ import {Request, Response} from "express";
 import { getUsers } from "../Services/getUsers.js";
 
 export const getallUsers = (req:Request, res:Response) => {
-    getUsers((error:object, results:object) => {
+    getUsers((error:Error, results:object) => {
         if(error){
             console.log(error);
             return res.status(500).json({

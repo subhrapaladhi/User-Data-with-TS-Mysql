@@ -1,12 +1,12 @@
 // DELETE USER
-
-const {pool} = require('../Config/dbconnect.js');
+import {pool} from '../Config/dbconnect.js';
+import { MysqlError, FieldInfo } from 'mysql';
 
 export const deleteUser = (id:string, callback:Function) => {
     pool.query(
         `delete from registration where id=?`,
         [id],
-        (error, result, fields) => {
+        (error:MysqlError|null, result:any, fields:FieldInfo[]|undefined) => {
             if(error){
                 return callback(error);
             }

@@ -7,7 +7,7 @@ export const updateUsers = (req:Request, res:Response) => {
     const body = req.body;
     const salt = genSaltSync(10);
     body.password = hashSync(body.password, salt);
-    updateUser(body, (error:object, results:any) => {
+    updateUser(body, (error:Error, results:any) => {
         if(error){
             console.log(error);
             return res.status(500).json({

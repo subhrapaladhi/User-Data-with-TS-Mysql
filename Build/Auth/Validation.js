@@ -28,7 +28,6 @@ module.exports = {
     // AUTHORIZATION: verify if update/delete request if for the user's own account
     checkAccount: (req, res, next) => {
         let id = req.params.id || req.body.id;
-        console.log(`${req.body.userid} == ${id}`);
         if (req.body.userid != id) {
             res.json({
                 success: 0,

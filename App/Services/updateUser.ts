@@ -1,8 +1,9 @@
 // UPDATE USER DATA
+import {pool} from '../Config/dbconnect.js';
+import { MysqlError, FieldInfo } from 'mysql';
+import { userdataInf } from '../Interfaces/userDataInf';
 
-const {pool} = require('../Config/dbconnect.js');
-
-export const updateUser = (data, callback:Function) => {
+export const updateUser = (data:userdataInf, callback:Function) => {
     pool.query(
         `update registration set firstname=?, lastname=?, email=?, password=?, number=? where id=?`,
         [
@@ -13,7 +14,7 @@ export const updateUser = (data, callback:Function) => {
             data.number,
             data.id
         ],
-        (error:any, results:object, fields:any) => {
+        (error:MysqlError|null, results:object, fields:FieldInfo[]|undefined) => {
             if(error){
                 callback(error);
             }

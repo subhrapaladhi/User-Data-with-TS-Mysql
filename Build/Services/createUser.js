@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.create = void 0;
 // CREATE USER
-const { pool } = require('../Config/dbconnect.js');
+const dbconnect_js_1 = require("../Config/dbconnect.js");
 exports.create = (data, callback) => {
-    pool.query(`insert into registration(firstname, lastname, email, password, number) 
+    dbconnect_js_1.pool.query(`insert into registration(firstname, lastname, email, password, number) 
         values(?,?,?,?,?) `, [
         data.firstname,
         data.lastname,

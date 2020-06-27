@@ -7,7 +7,7 @@ export const createUser = (req: Request, res: Response) => {
     const body = req.body;
     const salt = genSaltSync(10);
     body.password = hashSync(body.password, salt)
-    create(body, (err:any , results:object) => {
+    create(body, (err:Error , results:object) => {
         if(err){
             console.log(err);
             return res.status(500).json({

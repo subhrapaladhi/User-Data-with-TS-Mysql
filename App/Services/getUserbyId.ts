@@ -1,12 +1,12 @@
 // GET USER BY ID
+import {pool} from '../Config/dbconnect.js';
+import { MysqlError, FieldInfo } from 'mysql';
 
-const {pool} = require('../Config/dbconnect.js');
-
-export const getUserId = (id, callback) => {
+export const getUserId = (id:string, callback:Function) => {
     pool.query(
         `select id, firstname, lastname, email, number from registration where id = ?`,
         [id],
-        (error, results, fields) => {
+        (error:MysqlError|null, results:object[], fields:FieldInfo[]|undefined) => {
             if(error){
                 return callback(error);
             }

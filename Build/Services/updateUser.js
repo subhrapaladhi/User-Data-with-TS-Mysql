@@ -1,10 +1,10 @@
 "use strict";
-// UPDATE USER DATA
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateUser = void 0;
-const { pool } = require('../Config/dbconnect.js');
+// UPDATE USER DATA
+const dbconnect_js_1 = require("../Config/dbconnect.js");
 exports.updateUser = (data, callback) => {
-    pool.query(`update registration set firstname=?, lastname=?, email=?, password=?, number=? where id=?`, [
+    dbconnect_js_1.pool.query(`update registration set firstname=?, lastname=?, email=?, password=?, number=? where id=?`, [
         data.firstname,
         data.lastname,
         data.email,

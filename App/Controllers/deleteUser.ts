@@ -4,7 +4,7 @@ import { deleteUser } from "../Services/deleteUser.js";
 
 export const deleteuser = (req:Request, res:Response) => {
     const id = req.params.id;
-    deleteUser(id, (error:any, results:number) => {
+    deleteUser(id, (error:Error, count:number) => {
         if(error){
             console.log(error);
             return res.status(500).json({
@@ -12,7 +12,7 @@ export const deleteuser = (req:Request, res:Response) => {
                 message: "database error"
             });
         }
-        if(results==0){
+        if(count==0){
             return res.json({
                 success: 0,
                 message: "record not found"

@@ -4,7 +4,7 @@ import { getUserId } from "../Services/getUserbyId.js";
 
 export const getUserbyUserId = (req:Request, res:Response) => {
     const id = req.params.id;
-    getUserId(id, (err:object, results: object) => {
+    getUserId(id, (err:Error, results: object) => {
         if(err){
             console.log(err);
             return res.status(500).json({

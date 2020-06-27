@@ -3,18 +3,11 @@ import {Request, Response} from "express";
 import {getUserbyEmail} from "../Services/getUserbyEmail.js";
 import { compareSync } from "bcrypt";
 import { sign } from "jsonwebtoken"; 
-
-interface resultInf{
-    "firstname": string,
-    "lastname": string,
-    "email": string,
-    "password": string,
-    "number": number
-}
+import { userdataInf } from '../Interfaces/userDataInf';
 
 export const login = (req:Request, res:Response) => {
     const body = req.body;
-    getUserbyEmail(body.email, (err: any, results: resultInf) => {
+    getUserbyEmail(body.email, (err: Error, results: userdataInf) => {
         if(err){
             return res.json({
                 success: 0,
